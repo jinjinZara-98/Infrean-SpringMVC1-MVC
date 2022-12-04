@@ -1,0 +1,35 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'helllo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//스프링 부트가 자동으로 ThymeleafViewResolver 와 필요한 스프링 빈들을 등록
+	//spring.thymeleaf.prefix=classpath:/templates/ 논리경로 앞에는 이 경로
+	//spring.thymeleaf.suffix=.html 논리경로 뒤에는 이 경로, 자동으로
+	//바꾸고 싶으면 application.properties에 넣어 설정하면 됨
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

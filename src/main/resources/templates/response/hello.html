@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!-- 타임리프 사용-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--th:text는 모델에서 data란 이름의 값을 꺼내 empty에 치환해 넣음, empty가 hello로 바뀜-->
+<p th:text="${data}">empty</p>
+</body>
+</html>
