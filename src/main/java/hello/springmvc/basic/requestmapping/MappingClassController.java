@@ -2,6 +2,7 @@ package hello.springmvc.basic.requestmapping;
 
 import org.springframework.web.bind.annotation.*;
 
+/** Rest API 예씨? */
 @RestController
 //공통경로 빼놓기, 같은 경로지만 방식에 따라 결과 다르게
 @RequestMapping("/mapping/users")

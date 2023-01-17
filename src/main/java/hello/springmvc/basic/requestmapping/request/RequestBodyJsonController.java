@@ -19,29 +19,28 @@ import java.nio.charset.StandardCharsets;
  * {"username":"hello", "age":20}
  * content-type: application/json
  */
-//lombok이 제공하는 어노테이션
-//private final Logger log = LoggerFactory.getLogger(getClass())을 대신하는 역할
 @Slf4j
 @Controller
 public class RequestBodyJsonController {
 
-    //json형식으로 요청을 했을때
-    //json이니까 ObjectMapper객체 생성
+    /**
+     * json형식으로 요청을 했을때 객체로 변환할 수 있음
+     */
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping("/request-body-json-v1")
     public void requestBodyJsonV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //요청에서 스트림 얻어 대입
+        /** 요청에서 스트림 얻어 대입 */
         ServletInputStream inputStream = request.getInputStream();
-        //스트림은 바이트코드, 바이트코드를 문자로 바꿀때는 인코딩타입 지정해줘야함
+        /** 스트림은 바이트코드, 바이트코드를 문자로 바꿀때는 인코딩타입 지정해줘야함 */
         String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
 
         log.info("messageBody={}", messageBody);
-        //어떤값을 어떤 클래스형태로 읽을꺼냐
+        /** 어떤값을 어떤 클래스형태로 읽을꺼냐  */
         HelloData data = objectMapper.readValue(messageBody, HelloData.class);
         log.info("username={}, age={}", data.getUsername(), data.getAge());
 
-        //@Controller는 반환 값이 논리경로이므로 response객체를 통해 http메시지바디에 출력
+        /** @Controller는 반환 값이 논리경로이므로 response객체를 통해 http메시지바디에 출력 */
         response.getWriter().write("ok");
     }
 
@@ -53,11 +52,11 @@ public class RequestBodyJsonController {
      * - 모든 메서드에 @ResponseBody 적용
      * - 메시지 바디 정보 직접 반환(view 조회X)
      * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     *
+     * 요청오는건 @RequestBody, http 메시지바디 읽어 변수에 바로 대입
      */
-    //@Controller 반환값은 논리경로이므로 http메시지바디에 출력하고 싶으면 이 어노테이션 사용
     @ResponseBody
     @PostMapping("/request-body-json-v2")
-    //요청오는건 @RequestBody, http메시지바디 읽어 변수에 바로 대입
     public String requestBodyJsonV2(@RequestBody String messageBody) throws IOException {
 
         HelloData data = objectMapper.readValue(messageBody, HelloData.class);

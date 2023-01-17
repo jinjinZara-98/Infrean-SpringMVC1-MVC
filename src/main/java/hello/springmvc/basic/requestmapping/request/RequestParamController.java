@@ -17,8 +17,9 @@ import java.util.Map;
 public class RequestParamController {
     /**
      * 반환 타입이 없으면서 이렇게 응답에 값을 직접 집어넣으면, view 조회X
+     *
+     * HTTP 메서드 지정해주지 않아 hello-form에서 보낸 POST 요청도 이거로 받는다
      */
-    //hello-form에서 적은 값을 전송하면 여기로 바로 옴
     @RequestMapping("/request-param-v1")
     public void requestParamV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -26,10 +27,12 @@ public class RequestParamController {
         String username = request.getParameter("username");
         int age = Integer.parseInt(request.getParameter("age"));
 
-        //void타입인데 response에 값쓰면 값 쓴게 나옴
         log.info("username={}, age={}", username, age);
 
-        //홈페이지에 출력, http 메시지바디
+        /**
+         * 반환타입이 void 이지만 response 에 값쓰면 값 쓴게 나옴
+         * 홈페이지에 출력, http 메시지바디에 데이터를 내보내는 방법중 하나
+         */
         response.getWriter().write("ok");
     }
 
@@ -135,8 +138,10 @@ public class RequestParamController {
      */
     @ResponseBody
     @RequestMapping("/request-param-map")
-    //모든 파라미터 값을 다 받는, MultiMap으로도 받기 가능
-    //파라미터값이 1개인게 확실하면 Map으로 해도 되지만 그렇지 않으면 MultiMap
+    /**
+     * 모든 파라미터 값을 다 받는, MultiMap 으로도 받기 가능
+     * 파라미터값이 1개인게 확실하면 Map 으로 해도 되지만 그렇지 않으면 MultiMap
+     */
     public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
 
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
@@ -146,8 +151,7 @@ public class RequestParamController {
 
     /**
      * @ModelAttribute 사용
-     * 참고: model.addAttribute(helloData) 코드도 함께 자동 적용됨, 뒤에 model을 설명할 때
-    자세히 설명
+     * 참고: model.addAttribute(helloData) 코드도 함께 자동 적용됨, 뒤에 model을 설명할 때 자세히 설명
      */
     @ResponseBody
     @RequestMapping("/model-attribute-v1")

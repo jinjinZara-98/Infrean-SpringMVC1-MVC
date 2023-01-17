@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Controller
 public class RequestBodyStringController {
+
     //postman으로 post방식으로 text선택해 바디에 문자 써놓으면 읽어 출력
     @PostMapping("/request-body-string-v1")
     public void requestBodyString(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -41,8 +42,9 @@ public class RequestBodyStringController {
     /**
      * InputStream(Reader): HTTP 요청 메시지 바디의 내용을 직접 조회
      * OutputStream(Writer): HTTP 응답 메시지의 바디에 직접 결과 출력
+     *
+     * HttpServletRequest과 HttpServletResponse 대신 InputStream와 Writer로
      */
-    //HttpServletRequest과 HttpServletResponse 대신 InputStream와 Writer로
     @PostMapping("/request-body-string-v2")
     public void requestBodyStringV2(InputStream inputStream, Writer responseWriter)  throws IOException {
 
